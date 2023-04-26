@@ -19,7 +19,7 @@
 </div>
 
 <div class="form-container">
-    <form action="{{ url_for('add_project') }}" method="'POST">
+    <form action="{{ url_for('add_project') }}" method="POST">
         {{project_form.csrf_token() }}
         {{project_form.project_name.label }}
         {{project_form.project_name }}
@@ -34,5 +34,8 @@
      
     </form>
 </div>
+{% for project in user_project %}
+{{ project.project_name }}<br>
+{% endfor %}
 </body>
 </html>

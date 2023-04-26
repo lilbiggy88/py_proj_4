@@ -9,7 +9,7 @@ class TeamForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class ProjectForm(FlaskForm):
-    project_name = StringField('project name', validators=[DataRequired(), Length(min=4, max=255)])
+    project_name = StringField('project_name', validators=[DataRequired(), Length(min=4, max=255)])
     description = TextAreaField('description')
     completed = BooleanField("completed?")
     team_selection = SelectField("team")

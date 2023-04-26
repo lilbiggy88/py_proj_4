@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from forms import TeamForm, ProjectForm
 from model import db, User, Team, Project, connect_to_db
 
@@ -15,7 +15,9 @@ def home():
     team_form = TeamForm()
     project_form = ProjectForm()
     project_form.update_teams(User.query.get(user_id).teams)
-    return render_template("home.html", team_form = team_form, project_form = project_form)
+    user_project = Project.query.all()
+    return render_template("home.html", team_form = team_form, project_form = project_form, user_project = user_project)
+
 
 
 @app.route("/add-team", methods=["POST"])
@@ -37,7 +39,9 @@ def add_project():
     project_form.update_teams(User.query.get(user_id).teams)
 
     if project_form.validate_on_submit():
-        project_name = project_form.project_name.data
+        # project_name = project_form.project_name.data
+        print(request.form)
+        project_name = request.form["project_name"]
         description = project_form.description.data
         completed = project_form.completed.data
         team_id = project_form.team_selection.data
@@ -48,7 +52,7 @@ def add_project():
 
         return redirect(url_for("home"))
     else:
-        return redirect(url_for("home"))
+        return "Failed!"
     
 
 if __name__ == "__main__":
